@@ -4,7 +4,7 @@
 
 draft.json:
   {"date": "2026-10-27", "status": "ready" | "skip", "image_type": "news",
-   "image_title": "...", "post_html": "...", "button_url": "https://listai.pro/katalog/",
+   "image_title": "...", "image_file": "images/2026-10-27.jpg", "post_html": "...", "button_url": "https://listai.pro/katalog/",
    "facts": ["утверждение — источник, дата", ...], "note": "почему пропуск (для status=skip)"}
 """
 import argparse
@@ -60,15 +60,18 @@ def main():
             done.touch()
         return
 
-    out = ROOT / "out"
-    out.mkdir(exist_ok=True)
-    img = out / f"{today}.jpg"
-    r = subprocess.run([sys.executable, str(ROOT / "make_post_pic.py"), "--type", d.get("image_type", "news"),
-                        "--title", d["image_title"], "--out", str(img)], capture_output=True, text=True)
-    print(r.stdout.strip(), r.stderr.strip())
-    if r.returncode != 0:
-        send(a, "--text", "Не удалось собрать картинку, смотрите лог на сервере.")
-        return
+    # картинку обычно собирает и коммитит облачный агент (image_file); если её нет, собираем сами (нужен Pillow)
+    img = ROOT / d["image_file"] if d.get("image_file") else None
+    if not (img and img.exists()):
+        out = ROOT / "out"
+        out.mkdir(exist_ok=True)
+        img = out / f"{today}.jpg"
+        r = subprocess.run([sys.executable, str(ROOT / "make_post_pic.py"), "--type", d.get("image_type", "news"),
+                            "--title", d["image_title"], "--out", str(img)], capture_output=True, text=True)
+        print(r.stdout.strip(), r.stderr.strip())
+        if r.returncode != 0:
+            send(a, "--text", "Не удалось получить картинку, смотрите лог на сервере.")
+            return
     ok = send(a, "--photo", str(img), "--text", d["post_html"],
               "--button", f"Открыть в каталоге|{d.get('button_url', 'https://listai.pro/katalog/')}")
     if ok:

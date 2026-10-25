@@ -8,7 +8,7 @@
 
 Формат `draft.json`:
 
-    {"date": "2026-10-27", "status": "ready" | "skip", "image_type": "news",
+    {"date": "2026-10-27", "status": "ready" | "skip", "image_type": "news", "image_file": "images/2026-10-27.jpg",
      "image_title": "...", "post_html": "...", "button_url": "https://listai.pro/katalog/",
      "facts": ["утверждение — источник, дата"], "note": "причина пропуска (для status=skip)"}
 
