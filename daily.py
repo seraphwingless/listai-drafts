@@ -18,11 +18,29 @@ import sys
 import time
 import urllib.request
 from pathlib import Path
-from zoneinfo import ZoneInfo
+try:
+    from zoneinfo import ZoneInfo
+except Exception:
+    ZoneInfo = None
 
 ROOT = Path(__file__).resolve().parent
 RAW = "https://raw.githubusercontent.com/seraphwingless/listai-drafts/main/"
 CTX = ssl.create_default_context(cafile="/etc/ssl/cert.pem") if os.path.exists("/etc/ssl/cert.pem") else None
+
+
+def lisbon_now():
+    try:
+        return datetime.datetime.now(ZoneInfo("Europe/Lisbon"))
+    except Exception:
+        # запасной расчёт: Лиссабон = UTC, летом (с последнего вс. марта до последнего вс. октября, 01:00 UTC) UTC+1
+        u = datetime.datetime.now(datetime.timezone.utc)
+        def last_sun(y, m):
+            d = datetime.date(y, m, 31)
+            while d.weekday() != 6:
+                d -= datetime.timedelta(days=1)
+            return datetime.datetime(y, m, d.day, 1, tzinfo=datetime.timezone.utc)
+        summer = last_sun(u.year, 3) <= u < last_sun(u.year, 10)
+        return u.astimezone(datetime.timezone(datetime.timedelta(hours=1 if summer else 0)))
 
 
 def msk_today():
@@ -109,8 +127,7 @@ def publish(args, today, item, img):
         return
     cfg = load_config()
     hh, mm = map(int, cfg.get("publish_time_lisbon", "10:05").split(":"))
-    tz = ZoneInfo("Europe/Lisbon")
-    now = datetime.datetime.now(tz)
+    now = lisbon_now()
     target = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
     if args.publish_at:
         h2, m2 = map(int, args.publish_at.split(":")); target = now.replace(hour=h2, minute=m2, second=0, microsecond=0)
