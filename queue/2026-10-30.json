@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-30",
+  "kind": "tool",
+  "image_type": "tool",
+  "image_title": "GigaChat",
+  "image_file": "images/2026-10-30.jpg",
+  "post_html": "<b>GigaChat: российский ассистент Сбера</b>\n\nGigaChat пишет тексты, отвечает на вопросы, помогает с кодом и рисует картинки по описанию. Работает на русском без VPN: на сайте, в приложениях, в Telegram, ВКонтакте, MAX и на колонках SberBoom.\n\nБесплатно доступна модель Lite. Подписка Plus, по данным на момент публикации от 199 рублей в месяц, открывает Pro и Max.\n\nВ карточке: как выбрать между Lite, Pro и Max, где пользоваться и что с картинками.\n\n📌 Карточка в каталоге: listai.pro/proekt/gigachat\n\n— listai.pro · каталог нейросетей",
+  "button_text": "Открыть карточку GigaChat",
+  "button_url": "https://listai.pro/proekt/gigachat/",
+  "requires_url": "https://listai.pro/proekt/gigachat/",
+  "facts": [
+    "GigaChat: платформы, Lite/Pro/Max, Plus от 199 руб по обзорам"
+  ]
+}

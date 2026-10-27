@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-31",
+  "kind": "tool",
+  "image_type": "tool",
+  "image_title": "Qwen",
+  "image_file": "images/2026-10-31.jpg",
+  "post_html": "<b>Qwen: бесплатный ассистент и открытые модели Alibaba</b>\n\nQwen пишет и переводит тексты, помогает с кодом, ищет информацию и работает с файлами. Для разработчиков у Alibaba много моделей с открытыми весами, которые можно запускать у себя, и API с оплатой по использованию.\n\nАссистент доступен бесплатно. В конце 2025 года приложение Tongyi переименовали в Qwen.\n\nВ карточке: возможности, агентные функции и чем заменить.\n\n📌 Карточка в каталоге: listai.pro/proekt/qwen\n\n— listai.pro · каталог нейросетей",
+  "button_text": "Открыть карточку Qwen",
+  "button_url": "https://listai.pro/proekt/qwen/",
+  "requires_url": "https://listai.pro/proekt/qwen/",
+  "facts": [
+    "Qwen: переименование Tongyi в Qwen, бесплатное приложение по заявлениям Alibaba"
+  ]
+}
