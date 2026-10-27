@@ -2,5 +2,8 @@
   "publish_channel": true,
   "channel": "@listaipro",
   "dm_chat": "234578511",
-  "publish_time_lisbon": "10:05"
+  "slots": {
+    "news": "09:00",
+    "tool": "15:00"
+  }
 }
