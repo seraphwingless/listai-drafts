@@ -1,83 +1,205 @@
 #!/usr/bin/env python3
-"""Ежедневный запуск на сервере: берёт draft.json (его пишет облачный агент), собирает картинку
-и присылает черновик в личку владельцу. В канал НЕ публикует (пока включён режим «только бот»).
+"""Ежедневный запуск на сервере (cron 06:50 UTC).
 
-draft.json:
-  {"date": "2026-10-27", "status": "ready" | "skip", "image_type": "news",
-   "image_title": "...", "image_file": "images/2026-10-27.jpg", "post_html": "...", "button_url": "https://listai.pro/katalog/",
-   "facts": ["утверждение — источник, дата", ...], "note": "почему пропуск (для status=skip)"}
+1. Выбирает пост дня: queue/ДАТА.json (инструмент дня) либо draft.json (новость от облачного агента).
+2. Присылает превью владельцу в личку (бот).
+3. Если config.publish_channel = true, в 10:05 по Лиссабону сам публикует пост в канал
+   (отдельный фоновый процесс). Отмена: добавить дату в hold.json (список "dates").
+Секретов в репозитории нет: токен бота лежит только на сервере.
 """
 import argparse
 import datetime
 import html
 import json
+import os
+import ssl
 import subprocess
 import sys
+import time
+import urllib.request
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent
+RAW = "https://raw.githubusercontent.com/seraphwingless/listai-drafts/main/"
+CTX = ssl.create_default_context(cafile="/etc/ssl/cert.pem") if os.path.exists("/etc/ssl/cert.pem") else None
 
 
 def msk_today():
     return (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=3)).date().isoformat()
 
 
-def send(args, *extra):
-    cmd = [sys.executable, str(ROOT / "telegram_post.py"), "--chat", args.chat,
+def send(args, chat, *extra):
+    cmd = [sys.executable, str(ROOT / "telegram_post.py"), "--chat", str(chat),
            "--token-file", args.token_file, *extra]
     r = subprocess.run(cmd, capture_output=True, text=True)
-    print(r.stdout.strip(), r.stderr.strip())
+    print(r.stdout.strip(), r.stderr.strip(), flush=True)
     return r.returncode == 0
+
+
+def load_config():
+    try:
+        return json.loads((ROOT / "config.json").read_text(encoding="utf-8"))
+    except Exception:
+        return {"publish_channel": False}
+
+
+def pick_item(today):
+    q = ROOT / "queue" / f"{today}.json"
+    if q.exists():
+        d = json.loads(q.read_text(encoding="utf-8"))
+        d.setdefault("kind", "tool")
+        d["source"] = "queue"
+        return d
+    return news_item(today)
+
+
+def news_item(today):
+    try:
+        d = json.loads((ROOT / "draft.json").read_text(encoding="utf-8"))
+    except Exception as e:
+        print("draft.json не читается:", e)
+        return None
+    if d.get("date") != today:
+        print(f"черновик за {d.get('date')}, а сегодня {today}")
+        return None
+    d["kind"] = "news"
+    d["source"] = "draft"
+    return d
+
+
+def item_image(item, today):
+    img = ROOT / item["image_file"] if item.get("image_file") else None
+    if img and img.exists():
+        return img
+    out = ROOT / "out"
+    out.mkdir(exist_ok=True)
+    img = out / f"{today}.jpg"
+    r = subprocess.run([sys.executable, str(ROOT / "make_post_pic.py"), "--type", item.get("image_type", "news"),
+                        "--title", item["image_title"], "--out", str(img)], capture_output=True, text=True)
+    print(r.stdout.strip(), r.stderr.strip())
+    return img if r.returncode == 0 and img.exists() else None
+
+
+def button_args(item):
+    return ["--button", f"{item.get('button_text', 'Открыть в каталоге')}|{item.get('button_url', 'https://listai.pro/katalog/')}"]
+
+
+def url_ok(url):
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        return urllib.request.urlopen(req, timeout=20, context=CTX).status == 200
+    except Exception:
+        return False
+
+
+def held(today):
+    try:
+        with urllib.request.urlopen(RAW + "hold.json", timeout=20, context=CTX) as r:
+            return today in json.load(r).get("dates", [])
+    except Exception:
+        return False
+
+
+def publish(args, today, item, img):
+    state = Path(args.state)
+    done = state / f"{today}.published"
+    if done.exists():
+        print("уже опубликовано")
+        return
+    cfg = load_config()
+    hh, mm = map(int, cfg.get("publish_time_lisbon", "10:05").split(":"))
+    tz = ZoneInfo("Europe/Lisbon")
+    now = datetime.datetime.now(tz)
+    target = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+    if args.publish_at:
+        h2, m2 = map(int, args.publish_at.split(":")); target = now.replace(hour=h2, minute=m2, second=0, microsecond=0)
+    wait = (target - now).total_seconds()
+    if wait > 0:
+        print(f"ждём до {target:%H:%M} по Лиссабону ({int(wait)} с)", flush=True)
+        time.sleep(wait)
+    if held(today):
+        send(args, cfg["dm_chat"], "--text", f"Публикация за {today} отменена (hold.json).")
+        return
+    if item.get("requires_url") and not url_ok(item["requires_url"]):
+        fb = news_item(today)
+        fb_img = item_image(fb, today) if fb and fb.get("status") == "ready" else None
+        if not fb_img:
+            send(args, cfg["dm_chat"], "--text", f"Пост за {today} не вышел: карточка {html.escape(item['requires_url'])} не опубликована, а новости дня нет.")
+            return
+        send(args, cfg["dm_chat"], "--text", f"Карточка {html.escape(item['requires_url'])} не опубликована, вместо поста про инструмент выходит новость дня.")
+        item, img = fb, fb_img
+    channel = args.channel or cfg.get("channel")
+    ok = send(args, channel, "--photo", str(img), "--text", item["post_html"], *button_args(item))
+    if ok:
+        done.touch()
+        send(args, cfg["dm_chat"], "--text", f"Опубликовано в канале ({today}).")
+    else:
+        send(args, cfg["dm_chat"], "--text", f"Не удалось опубликовать пост за {today}, смотрите лог на сервере.")
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--token-file", required=True)
     ap.add_argument("--state", required=True)
-    ap.add_argument("--chat", required=True, help="куда присылать черновик (id личного чата)")
+    ap.add_argument("--chat", help="чат для превью (по умолчанию из config.json)")
+    ap.add_argument("--channel", help="куда публиковать (по умолчанию из config.json)")
+    ap.add_argument("--publish-at", help="HH:MM по Лиссабону (для теста)")
+    ap.add_argument("--no-preview", action="store_true")
+    ap.add_argument("--worker", action="store_true", help="внутренний режим: ждать и публиковать")
+    ap.add_argument("--date")
     a = ap.parse_args()
 
+    cfg = load_config()
+    dm = a.chat or cfg.get("dm_chat")
     state = Path(a.state)
     state.mkdir(parents=True, exist_ok=True)
-    today = msk_today()
-    done = state / f"{today}.done"
-    if done.exists():
-        print("сегодня уже отправлено")
+    today = a.date or msk_today()
+
+    item = pick_item(today)
+    if a.worker:
+        img = item_image(item, today) if item else None
+        if item and img:
+            publish(a, today, item, img)
         return
 
-    try:
-        d = json.loads((ROOT / "draft.json").read_text(encoding="utf-8"))
-    except Exception as e:
-        print("draft.json не читается:", e)
-        return
-    if d.get("date") != today:
-        print(f"черновик за {d.get('date')}, а сегодня {today}: ждём")
+    prepared = state / f"{today}.prepared"
+    if prepared.exists():
+        print("сегодня уже подготовлено")
         return
 
-    if d.get("status") != "ready":
-        note = html.escape(d.get("note") or "подходящей новости нет")
-        if send(a, "--text", f"Сегодня ({today}) поста не будет: {note}"):
-            done.touch()
+    if not item or item.get("status") == "skip":
+        note = html.escape((item or {}).get("note") or "подходящего поста нет")
+        if send(a, dm, "--text", f"Сегодня ({today}) поста не будет: {note}"):
+            prepared.touch()
         return
 
-    # картинку обычно собирает и коммитит облачный агент (image_file); если её нет, собираем сами (нужен Pillow)
-    img = ROOT / d["image_file"] if d.get("image_file") else None
-    if not (img and img.exists()):
-        out = ROOT / "out"
-        out.mkdir(exist_ok=True)
-        img = out / f"{today}.jpg"
-        r = subprocess.run([sys.executable, str(ROOT / "make_post_pic.py"), "--type", d.get("image_type", "news"),
-                            "--title", d["image_title"], "--out", str(img)], capture_output=True, text=True)
-        print(r.stdout.strip(), r.stderr.strip())
-        if r.returncode != 0:
-            send(a, "--text", "Не удалось получить картинку, смотрите лог на сервере.")
+    img = item_image(item, today)
+    if not img:
+        send(a, dm, "--text", "Не удалось получить картинку, смотрите лог на сервере.")
+        return
+
+    if not a.no_preview:
+        ok = send(a, dm, "--photo", str(img), "--text", item["post_html"], *button_args(item))
+        if not ok:
             return
-    ok = send(a, "--photo", str(img), "--text", d["post_html"],
-              "--button", f"Открыть в каталоге|{d.get('button_url', 'https://listai.pro/katalog/')}")
-    if ok:
-        facts = "\n".join("• " + html.escape(x) for x in d.get("facts", []))
-        send(a, "--text", "Проверка фактов (только для вас):\n" + (facts or "нет данных"))
-        done.touch()
+        facts = "\n".join("• " + html.escape(x) for x in item.get("facts", []))
+        when = cfg.get("publish_time_lisbon", "10:05")
+        tail = (f"\n\nВыйдет в канал сегодня в {when} по Лиссабону автоматически." if cfg.get("publish_channel")
+                else "\n\nАвтопубликация в канал выключена.")
+        send(a, dm, "--text", "Что за пост (только для вас):\n" + (facts or "нет данных") + tail)
+    prepared.touch()
+
+    if cfg.get("publish_channel"):
+        cmd = [sys.executable, str(ROOT / "daily.py"), "--worker", "--token-file", a.token_file,
+               "--state", a.state, "--date", today]
+        if a.channel:
+            cmd += ["--channel", a.channel]
+        if a.publish_at:
+            cmd += ["--publish-at", a.publish_at]
+        log = open(state / f"{today}.worker.log", "a")
+        subprocess.Popen(cmd, cwd=str(ROOT), stdout=log, stderr=log, start_new_session=True, close_fds=True)
+        print("фоновая публикация запущена", flush=True)
 
 
 if __name__ == "__main__":
