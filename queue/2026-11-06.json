@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-06",
+  "kind": "tool",
+  "image_type": "tool",
+  "image_title": "OpenAI Codex",
+  "image_file": "images/2026-11-06.jpg",
+  "post_html": "<b>OpenAI Codex: кодинг-агент в терминале, облаке и IDE</b>\n\nCodex пишет и исправляет код, запускает тесты и готовит изменения к проверке. Есть открытая программа для терминала, облачный агент внутри ChatGPT, приложения и расширения для редакторов. В облаке можно запускать несколько задач параллельно.\n\nОтдельно не продаётся: входит в тарифы ChatGPT, на бесплатном доступ ограничен.\n\nВ карточке: формы доступа, как устроена работа и сравнение с Claude Code.\n\n📌 Карточка в каталоге: listai.pro/proekt/openai-codex\n\n— listai.pro · каталог нейросетей",
+  "button_text": "Открыть карточку OpenAI Codex",
+  "button_url": "https://listai.pro/proekt/openai-codex/",
+  "requires_url": "https://listai.pro/proekt/openai-codex/",
+  "facts": [
+    "Факты в карточке с оговорками по ценам: источники сторонние"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-05",
+  "kind": "tool",
+  "image_type": "tool",
+  "image_title": "Claude Code",
+  "image_file": "images/2026-11-05.jpg",
+  "post_html": "<b>Claude Code: агент для программирования от Anthropic</b>\n\nВы описываете задачу словами, а Claude Code изучает проект, правит файлы, запускает команды и тесты и показывает, что сделал. Работает в терминале, в расширениях для редакторов и в десктопном приложении Claude.\n\nОтдельной цены нет: он входит в платные тарифы Claude или оплачивается по использованию через API. На бесплатном тарифе недоступен.\n\nВ карточке: что умеет, где работает, сколько стоит и чем отличается от Cursor.\n\n📌 Карточка в каталоге: listai.pro/proekt/claude-code\n\n— listai.pro · каталог нейросетей",
+  "button_text": "Открыть карточку Claude Code",
+  "button_url": "https://listai.pro/proekt/claude-code/",
+  "requires_url": "https://listai.pro/proekt/claude-code/",
+  "facts": [
+    "Факты в карточке с оговорками по ценам: источники сторонние"
+  ]
+}
