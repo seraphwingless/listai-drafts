@@ -9,6 +9,7 @@
 """
 import argparse
 import datetime
+import hashlib
 import html
 import json
 import os
@@ -94,9 +95,29 @@ def news_item(today):
     return d
 
 
+def _md5(path):
+    return hashlib.md5(Path(path).read_bytes()).hexdigest()
+
+
+def image_clash(item, img, today):
+    """Защита от одинаковых картинок: у новости и инструмента дня файлы должны быть разными."""
+    kind = item.get("kind")
+    for other in ("news", "tool"):
+        if other == kind:
+            continue
+        o = pick_item(today, other)
+        of = ROOT / o["image_file"] if o and o.get("image_file") else None
+        if of and of.exists() and (of.resolve() == img.resolve() or _md5(of) == _md5(img)):
+            print(f"СТОП: картинка {kind} совпадает с картинкой {other} ({img.name})")
+            return True
+    return False
+
+
 def item_image(item, today):
     img = ROOT / item["image_file"] if item.get("image_file") else None
     if img and img.exists():
+        if image_clash(item, img, today):
+            return None
         return img
     out = ROOT / "out"
     out.mkdir(exist_ok=True)
@@ -209,7 +230,7 @@ def main():
             continue
         img = item_image(item, today)
         if not img:
-            send(a, dm, "--text", f"Не удалось получить картинку ({kind}), смотрите лог на сервере.")
+            send(a, dm, "--text", f"Пост ({kind}) за {today} НЕ выйдет: нет картинки или она совпадает с картинкой другого поста. Смотрите лог на сервере.")
             continue
         when = slot_time(cfg, kind) if not a.publish_at else a.publish_at
         if not a.no_preview:
