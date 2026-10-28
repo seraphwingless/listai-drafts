@@ -12,6 +12,7 @@ import datetime
 import hashlib
 import html
 import json
+import re
 import os
 import ssl
 import subprocess
@@ -149,6 +150,35 @@ def held(today, kind=None):
         return False
 
 
+def verify_published(args, cfg, today, kind):
+    """После публикации: сравнить картинки двух последних постов канала с t.me и прислать результат в личку."""
+    try:
+        time.sleep(20)
+        ch = str(args.channel or cfg.get("channel") or "").lstrip("@")
+        req = urllib.request.Request(f"https://t.me/s/{ch}", headers={"User-Agent": "Mozilla/5.0"})
+        page = urllib.request.urlopen(req, timeout=30, context=CTX).read().decode("utf8", "ignore")
+        posts = re.split(r'data-post="', page)[1:]
+        found = []
+        for blk in posts:
+            m = re.search(r"tgme_widget_message_photo_wrap[^>]*background-image:url\('(https://[^']+)'\)", blk)
+            if m:
+                found.append((blk.split('"', 1)[0], m.group(1)))
+        if len(found) < 2:
+            send(args, cfg["dm_chat"], "--text", f"Проверка поста ({kind}, {today}): не удалось найти две последние картинки в канале.")
+            return
+        sums = []
+        for pid, url in found[-2:]:
+            data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=30, context=CTX).read()
+            sums.append((pid, hashlib.md5(data).hexdigest()))
+        if sums[0][1] == sums[1][1]:
+            msg = f"⚠️ Проверка поста ({kind}, {today}): картинки постов {sums[0][0]} и {sums[1][0]} ОДИНАКОВЫЕ."
+        else:
+            msg = f"✅ Проверка поста ({kind}, {today}): картинки последних постов разные ({sums[0][0]} и {sums[1][0]})."
+        send(args, cfg["dm_chat"], "--text", msg)
+    except Exception as e:
+        print("verify_published:", e, flush=True)
+
+
 def publish(args, today, item, img):
     state = Path(args.state)
     kind = item["kind"]
@@ -180,6 +210,7 @@ def publish(args, today, item, img):
     if ok:
         done.touch()
         send(args, cfg["dm_chat"], "--text", f"Опубликовано в канале ({kind}, {today}).")
+        verify_published(args, cfg, today, kind)
     else:
         send(args, cfg["dm_chat"], "--text", f"Не удалось опубликовать пост за {today}, смотрите лог на сервере.")
 
