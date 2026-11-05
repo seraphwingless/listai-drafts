@@ -179,6 +179,14 @@ def verify_published(args, cfg, today, kind):
         print("verify_published:", e, flush=True)
 
 
+def tick_x(kind):
+    """Сайт присылает владельцу пост для X. Ошибка здесь не должна мешать каналу: у сайта есть запасной запуск."""
+    try:
+        urllib.request.urlopen(f"https://listai.pro/wp-json/lx-x/v1/tick?slot={kind}", timeout=30).read()
+    except Exception as e:
+        print("tick_x:", e)
+
+
 def publish(args, today, item, img):
     state = Path(args.state)
     kind = item["kind"]
@@ -211,6 +219,7 @@ def publish(args, today, item, img):
         done.touch()
         send(args, cfg["dm_chat"], "--text", f"Опубликовано в канале ({kind}, {today}).")
         verify_published(args, cfg, today, kind)
+        tick_x(kind)
     else:
         send(args, cfg["dm_chat"], "--text", f"Не удалось опубликовать пост за {today}, смотрите лог на сервере.")
 
