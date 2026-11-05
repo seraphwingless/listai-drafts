@@ -5,5 +5,11 @@
     "url": "https://listai.pro/katalog/",
     "image": "images/2026-11-05.jpg",
     "source": "draft.json, the-decoder.com 4 ноября 2026"
+  },
+  "tool": {
+    "text": "Один промпт, пять нейросетей для презентаций, по 8 слайдов у каждой. Бесплатно скачать PPTX дали только Gamma и Алиса AI. Остальные сервисы просят оплату или смену тарифа на этапе экспорта.",
+    "url": "https://listai.pro/nejroset-dlya-prezentacij",
+    "image": "images/x/2026-11-05-tool.jpg",
+    "source": "https://listai.pro/nejroset-dlya-prezentacij"
   }
 }
