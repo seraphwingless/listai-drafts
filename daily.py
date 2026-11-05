@@ -45,7 +45,8 @@ def lisbon_now():
         return u.astimezone(datetime.timezone(datetime.timedelta(hours=1 if summer else 0)))
 
 
-SLOTS = {"news": "09:00", "tool": "15:00"}
+SLOTS = {"news": "09:00", "tool": "15:00", "extra": "12:00"}
+KINDS = ["news", "tool", "extra"]
 
 
 def slot_time(cfg, kind):
@@ -72,12 +73,13 @@ def load_config():
 
 
 def pick_item(today, kind):
-    if kind == "tool":
-        q = ROOT / "queue" / f"{today}.json"
+    if kind in ("tool", "extra"):
+        # extra: разовый дополнительный пост дня, queue/extra/ДАТА.json
+        q = ROOT / "queue" / ("extra" if kind == "extra" else "") / f"{today}.json"
         if not q.exists():
             return None
         d = json.loads(q.read_text(encoding="utf-8"))
-        d["kind"] = "tool"
+        d["kind"] = kind
         return d
     return news_item(today)
 
@@ -103,7 +105,7 @@ def _md5(path):
 def image_clash(item, img, today):
     """Защита от одинаковых картинок: у новости и инструмента дня файлы должны быть разными."""
     kind = item.get("kind")
-    for other in ("news", "tool"):
+    for other in KINDS:
         if other == kind:
             continue
         o = pick_item(today, other)
@@ -219,7 +221,8 @@ def publish(args, today, item, img):
         done.touch()
         send(args, cfg["dm_chat"], "--text", f"Опубликовано в канале ({kind}, {today}).")
         verify_published(args, cfg, today, kind)
-        tick_x(kind)
+        if kind != "extra":
+            tick_x(kind)
     else:
         send(args, cfg["dm_chat"], "--text", f"Не удалось опубликовать пост за {today}, смотрите лог на сервере.")
 
@@ -233,7 +236,7 @@ def main():
     ap.add_argument("--publish-at", help="HH:MM по Лиссабону (для теста или разового запуска)")
     ap.add_argument("--no-preview", action="store_true")
     ap.add_argument("--worker", action="store_true", help="внутренний режим: ждать и публиковать")
-    ap.add_argument("--kind", choices=["news", "tool"], help="только этот тип поста")
+    ap.add_argument("--kind", choices=KINDS, help="только этот тип поста")
     ap.add_argument("--date")
     a = ap.parse_args()
 
@@ -242,7 +245,7 @@ def main():
     state = Path(a.state)
     state.mkdir(parents=True, exist_ok=True)
     today = a.date or msk_today()
-    kinds = [a.kind] if a.kind else ["news", "tool"]
+    kinds = [a.kind] if a.kind else KINDS
 
     for kind in kinds:
         item = pick_item(today, kind)
@@ -274,7 +277,7 @@ def main():
             continue
         when = slot_time(cfg, kind) if not a.publish_at else a.publish_at
         if not a.no_preview:
-            label = "НОВОСТЬ" if kind == "news" else "ИНСТРУМЕНТ ДНЯ"
+            label = {"news": "НОВОСТЬ", "tool": "ИНСТРУМЕНТ ДНЯ"}.get(kind, "ДОПОЛНИТЕЛЬНЫЙ ПОСТ")
             if not send(a, dm, "--photo", str(img), "--text", item["post_html"], *button_args(item)):
                 continue
             facts = "\n".join("• " + html.escape(x) for x in item.get("facts", []))
