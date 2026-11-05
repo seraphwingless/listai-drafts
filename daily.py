@@ -221,8 +221,7 @@ def publish(args, today, item, img):
         done.touch()
         send(args, cfg["dm_chat"], "--text", f"Опубликовано в канале ({kind}, {today}).")
         verify_published(args, cfg, today, kind)
-        if kind != "extra":
-            tick_x(kind)
+        tick_x(kind)
     else:
         send(args, cfg["dm_chat"], "--text", f"Не удалось опубликовать пост за {today}, смотрите лог на сервере.")
 
