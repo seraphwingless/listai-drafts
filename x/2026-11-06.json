@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-06",
+ "news": {
+  "text": "Видео в Gemini Omni 1.2 Flash теперь до 15 секунд, раньше было 10. Секунда в 720p стоит $0,07, на 30% дешевле прошлой версии.\n\nЧерновики разумно крутить в 360p или 720p и только финал рендерить в 1080p.",
+  "url": "https://listai.pro/proekt/gemini/",
+  "image": "images/2026-11-06.jpg",
+  "source": "draft.json 2026-11-06 (the-decoder.com, 5.11.2026)"
+ },
+ "tool": {
+  "text": "Codex от OpenAI живёт не только в облаке ChatGPT. Есть открытая программа для терминала и расширения для редакторов.\n\nВ облаке можно запустить несколько задач сразу, а доступ входит в тарифы ChatGPT.",
+  "url": "https://listai.pro/proekt/openai-codex/",
+  "image": "images/tool/2026-11-06.jpg",
+  "source": "queue/2026-11-06.json"
+ }
+}
