@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-07",
+ "news": {
+  "text": "В Claude появился Personal Finance (бета): подключаете банковские счета и спрашиваете, на что уходят деньги. Доступ только для чтения, переводить деньги он не может.\n\nПока только США и подписки Pro, Max, Ultra.",
+  "url": "https://listai.pro/proekt/claude",
+  "image": "images/2026-11-07.jpg",
+  "source": "draft.json (the-decoder.com, 6.11.2026)"
+ },
+ "tool": {
+  "text": "Видео с нейросетью на Kwork чаще всего стоит 2 500-6 000 рублей, медиана около 5 000, цену обычно считают за минуту ролика.\n\nОзвучка нейросетью: медиана около 2 000. Монтаж Reels: около 1 000 за ролик.",
+  "url": "https://listai.pro/montazher-rilsov-nejroseti",
+  "image": "images/x/2026-11-07-tool.jpg",
+  "source": "https://listai.pro/montazher-rilsov-nejroseti"
+ }
+}
