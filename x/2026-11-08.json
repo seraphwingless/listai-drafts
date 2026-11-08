@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-08",
+ "news": {
+  "text": "У каждого агента Perplexity Teammates своя виртуальная машина с рабочим столом и браузером, а ход работы видно в ветках приложения.\n\nНо доступ только на тарифе Max за $200 в месяц.",
+  "url": "https://listai.pro/proekt/perplexity/",
+  "image": "images/2026-11-08.jpg",
+  "source": "draft.json (the-decoder.com, 6.11.2026)"
+ },
+ "tool": {
+  "text": "Le Chat от Mistral AI стоит попробовать, если важна европейская юрисдикция компании. Есть бесплатный тариф с дневными лимитами, а Pro по данным обзоров обходится примерно в 15 долларов в месяц.",
+  "url": "https://listai.pro/proekt/mistral-le-chat/",
+  "image": "images/tool/2026-11-08.jpg",
+  "source": "queue/2026-11-08.json"
+ }
+}
