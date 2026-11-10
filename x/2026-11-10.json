@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-10",
+ "news": {
+  "text": "Fable 5.2 стоит $8 и $40 за млн токенов вместо $10 и $50. В рейтинге Artificial Analysis у неё 65 баллов против 59 у Opus 5.5, но в агентной работе она местами слабее.\n\n#Claude #нейросети",
+  "url": "https://listai.pro/proekt/claude/",
+  "image": "images/2026-11-10.jpg",
+  "source": "draft.json: Claude Fable 5.2 и Mythos 5.2"
+ },
+ "tool": {
+  "text": "Попросите нейросеть дать пять главных мыслей из PDF с цитатами, а потом сверьте каждую цитату с оригиналом. За десять минут поймёте, насколько ей можно доверять.\n\n#ChatGPT #нейросети",
+  "url": "https://listai.pro/nejroset-dlya-dokumentov",
+  "image": "images/x/2026-11-10-tool.jpg",
+  "source": "блог: Нейросеть для документов (запасной список)"
+ }
+}
