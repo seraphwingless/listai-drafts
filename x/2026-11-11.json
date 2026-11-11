@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-11",
+ "news": {
+  "text": "Таблицы с формулами, доски для мозговых штурмов, подключение к Snowflake и Salesforce: Anthropic делает из Claude рабочее пространство. Заметки на звонках обещают позже, дата не названа.\n\n#Claude #нейросети",
+  "url": "https://listai.pro/proekt/claude",
+  "image": "images/2026-11-11.jpg",
+  "source": "draft.json, анонс Anthropic от 10 ноября 2026"
+ },
+ "tool": {
+  "text": "Нейросеть отвечает водой, когда не знает деталей. Хороший запрос состоит из пяти частей: роль, задача, контекст, формат и ограничения. Чаще всего пропускают контекст.\n\n#промты #нейросети",
+  "url": "https://listai.pro/promty-dlya-nejroseti",
+  "image": "images/x/2026-11-11-tool.jpg",
+  "source": "статья блога promty-dlya-nejroseti"
+ }
+}
