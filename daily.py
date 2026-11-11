@@ -166,17 +166,17 @@ def verify_published(args, cfg, today, kind):
             if m:
                 found.append((blk.split('"', 1)[0], m.group(1)))
         if len(found) < 2:
-            send(args, cfg["dm_chat"], "--text", f"Проверка поста ({kind}, {today}): не удалось найти две последние картинки в канале.")
+            print(f"Проверка поста ({kind}, {today}): не удалось найти две последние картинки в канале.", flush=True)
             return
         sums = []
         for pid, url in found[-2:]:
             data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=30, context=CTX).read()
             sums.append((pid, hashlib.md5(data).hexdigest()))
+        # владельцу пишем только о проблеме, успешная проверка уходит в лог
         if sums[0][1] == sums[1][1]:
-            msg = f"⚠️ Проверка поста ({kind}, {today}): картинки постов {sums[0][0]} и {sums[1][0]} ОДИНАКОВЫЕ."
+            send(args, cfg["dm_chat"], "--text", f"⚠️ Проверка поста ({kind}, {today}): картинки постов {sums[0][0]} и {sums[1][0]} ОДИНАКОВЫЕ.")
         else:
-            msg = f"✅ Проверка поста ({kind}, {today}): картинки последних постов разные ({sums[0][0]} и {sums[1][0]})."
-        send(args, cfg["dm_chat"], "--text", msg)
+            print(f"Проверка поста ({kind}, {today}): картинки разные ({sums[0][0]} и {sums[1][0]}).", flush=True)
     except Exception as e:
         print("verify_published:", e, flush=True)
 
@@ -184,7 +184,9 @@ def verify_published(args, cfg, today, kind):
 def tick_x(kind):
     """Сайт присылает владельцу пост для X. Ошибка здесь не должна мешать каналу: у сайта есть запасной запуск."""
     try:
-        urllib.request.urlopen(f"https://listai.pro/wp-json/lx-x/v1/tick?slot={kind}", timeout=30).read()
+        # без браузерного User-Agent Cloudflare отвечает 403, и пост для X приходил только через час с запасного запуска
+        req = urllib.request.Request(f"https://listai.pro/wp-json/lx-x/v1/tick?slot={kind}", headers={"User-Agent": "Mozilla/5.0"})
+        urllib.request.urlopen(req, timeout=30, context=CTX).read()
     except Exception as e:
         print("tick_x:", e)
 
@@ -219,9 +221,9 @@ def publish(args, today, item, img):
     ok = send(args, channel, "--photo", str(img), "--text", item["post_html"], *button_args(item))
     if ok:
         done.touch()
-        send(args, cfg["dm_chat"], "--text", f"Опубликовано в канале ({kind}, {today}).")
+        print(f"Опубликовано в канале ({kind}, {today}).", flush=True)
+        tick_x(kind)  # пост для X владельцу сразу после поста в канале
         verify_published(args, cfg, today, kind)
-        tick_x(kind)
     else:
         send(args, cfg["dm_chat"], "--text", f"Не удалось опубликовать пост за {today}, смотрите лог на сервере.")
 
