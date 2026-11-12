@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-12",
+ "news": {
+  "text": "У Claude Fable 5.2 API стал дешевле: $8 вместо $10 за миллион входных токенов и $40 вместо $50 за выходные. Пакетная обработка ещё на 50% дешевле. Про поддержку русского официально не сообщали.\n\n#Claude #нейросети",
+  "url": "https://listai.pro/katalog/",
+  "image": "images/2026-11-12.jpg",
+  "source": "draft.json, новость от 9 ноября 2026"
+ },
+ "tool": {
+  "text": "Один русский текст отправили в Suno, Udio, Mureka, Luvi и Music Labs. Песни готовы за пару минут, но скачать файл бесплатно не дал ни один сервис. Udio растянул короткий текст до 2:10.\n\n#Suno #нейросети",
+  "url": "https://listai.pro/sozdat-pesnyu-nejroset",
+  "image": "images/x/2026-11-12-tool.jpg",
+  "source": "статья блога sozdat-pesnyu-nejroset"
+ }
+}
