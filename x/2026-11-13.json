@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-13",
+ "news": {
+  "text": "Claude Meetings в бете заходит на звонок как видимый участник: отвечает на вопросы, ведёт заметки и список задач. Пока только Google Meet и тарифы Team и Enterprise.\n\n#Claude #нейросети",
+  "url": "https://listai.pro/proekt/claude/",
+  "image": "images/2026-11-13.jpg",
+  "source": "draft.json"
+ },
+ "tool": {
+  "text": "Чат-бот с нейросетью на Kwork чаще всего стоит 1 000-10 000 рублей, медиана около 5 000. Дорогие проекты доходят до 100 000.\n\nПрограммировать для старта не обязательно.\n\n#чатботы #ИИ",
+  "url": "https://listai.pro/sozdanie-chat-botov-s-ii",
+  "image": "images/x/2026-11-13-tool.jpg",
+  "source": "https://listai.pro/sozdanie-chat-botov-s-ii"
+ }
+}
