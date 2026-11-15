@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-15",
+ "news": {
+  "text": "Anthropic добавила в Claude таблицы, общие доски и встречи. Пока всё в бете, а встречи работают только с Google Meet и доступны на тарифах Team и Enterprise. Поддержку русского в источниках не подтверждают.\n\n#Claude #нейросети",
+  "url": "https://listai.pro/proekt/claude",
+  "image": "images/2026-11-15.jpg",
+  "source": "draft.json 2026-11-15"
+ },
+ "tool": {
+  "text": "В России без VPN работают Алиса AI, ГигаЧат, DeepSeek и Шедеврум. А PocketPal AI запускает нейросеть прямо на телефоне, без интернета. Смотрите строку «Разработчик»: подделок хватает.\n\n#нейросети #приложения",
+  "url": "https://listai.pro/nejroset-na-telefon",
+  "image": "images/x/2026-11-15-tool.jpg",
+  "source": "https://listai.pro/nejroset-na-telefon"
+ }
+}
