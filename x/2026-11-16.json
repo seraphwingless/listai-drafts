@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-16",
+ "news": {
+  "text": "Агент в ChatGPT Wallet покупает за вас, но номера карты не видит: платёж идёт через токен. Каждую покупку нужно подтвердить Face ID или отпечатком.\n\nПока только у части Pro-подписчиков в США.\n\n#ChatGPT #нейросети",
+  "url": "https://listai.pro/proekt/chatgpt",
+  "image": "images/2026-11-16.jpg",
+  "source": "draft.json"
+ },
+ "tool": {
+  "text": "Запрос «нарисуй кота» даёт случайную картинку. Лучше ответить на шесть вопросов: что, где, стиль, свет и цвет, формат, чего не нужно.\n\nИ правьте одну деталь за раз, а не весь запрос.\n\n#нейросети #ИИ",
+  "url": "https://listai.pro/kak-sdelat-kartinku-nejrosetyu",
+  "image": "images/x/2026-11-16-tool.jpg",
+  "source": "https://listai.pro/kak-sdelat-kartinku-nejrosetyu"
+ }
+}
