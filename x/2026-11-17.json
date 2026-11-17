@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-17",
+ "news": {
+  "text": "Claude теперь умеет встраивать живой HTML в canvas: текст остаётся выделяемым и кликабельным, его читают скринридеры. Работает в Chrome и Edge с версии 157, Safari и Firefox пока нет.\n\n#Claude #ИИ",
+  "url": "https://listai.pro/proekt/claude/",
+  "image": "images/2026-11-17.jpg",
+  "source": "draft.json (the-decoder.com, 2026-11-16)"
+ },
+ "tool": {
+  "text": "Нейросеть делает ролик на 5-10 секунд, длинное видео собирают из кусков в монтажке. Запрос строят просто: кто, где, одно действие, камера и стиль.\n\n#нейросети #видео",
+  "url": "https://listai.pro/nejroset-dlya-video",
+  "image": "images/x/2026-11-17-tool.jpg",
+  "source": "https://listai.pro/nejroset-dlya-video"
+ }
+}
