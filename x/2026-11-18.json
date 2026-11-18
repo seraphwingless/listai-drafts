@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-18",
+ "news": {
+  "text": "Astra от OpenAI в API стоит $8 за млн входных токенов и $40 за выходных, примерно на 20% дешевле предшественницы. В рейтинге Artificial Analysis она вторая после Claude Fable 5.2.\n\n#ChatGPT #ИИ",
+  "url": "https://listai.pro/proekt/chatgpt",
+  "image": "images/2026-11-18.jpg",
+  "source": "draft.json (the-decoder.com, 2026-11-17)"
+ },
+ "tool": {
+  "text": "На Kwork копирайтинг чаще всего стоит 500 рублей за 1 000 знаков. Статья на 5 000 знаков выходит на 2 500 рублей, а нейросеть не отменяет план, факты и редактуру.\n\n#копирайтинг #нейросети",
+  "url": "https://listai.pro/kopirajting-s-nulya-s-nejrosetyu",
+  "image": "images/x/2026-11-18-tool.jpg",
+  "source": "https://listai.pro/kopirajting-s-nulya-s-nejrosetyu"
+ }
+}
