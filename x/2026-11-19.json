@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-19",
+ "news": {
+  "text": "Qwen4-Max стоит $1,5 за млн входных токенов и $4,5 за выходные, на 25% дешевле Qwen3.8-Max. Окно 1 млн токенов, понимает видео. Цены из СМИ, русский пока не подтверждён.\n\n#Qwen #нейросети",
+  "url": "https://listai.pro/proekt/qwen/",
+  "image": "images/2026-11-19.jpg",
+  "source": "draft.json (Qwen4-Max)"
+ },
+ "tool": {
+  "text": "Чат-бот не думает над письмом, а подбирает вероятное следующее слово. Отсюда выдуманные цитаты и «забывчивость» длинного чата: старые сообщения не влезают в окно.\n\n#ChatGPT #нейросети",
+  "url": "https://listai.pro/kak-rabotayut-nejroseti",
+  "image": "images/x/2026-11-19-tool.jpg",
+  "source": "https://listai.pro/kak-rabotayut-nejroseti"
+ }
+}
