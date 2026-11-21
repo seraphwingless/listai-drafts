@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-21",
+ "news": {
+  "text": "Computer Use в Gemini для Mac работает в фоне: пока вы заняты, агент заполняет формы и раскладывает файлы по папкам. Любое его действие можно остановить или подтвердить.\n\n#Gemini #ИИ",
+  "url": "https://listai.pro/proekt/gemini/",
+  "image": "images/2026-11-21.jpg",
+  "source": "draft.json, новость про Gemini Computer Use для macOS"
+ },
+ "tool": {
+  "text": "Genie 3 не рисует видео, а строит мир, по которому можно ходить. Он создаётся на лету, без игровых движков вроде Unity. Пока это эксперимент: сессии короткие, физика упрощённая.\n\n#Genie3 #нейросети",
+  "url": "https://listai.pro/google-predstavila-genie-3-ii-kotoryj-sozdayot-3d-miry-v-realnom-vremeni",
+  "image": "images/x/2026-11-21-tool.jpg",
+  "source": "запасной список: статья блога про Genie 3"
+ }
+}
