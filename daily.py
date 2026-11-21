@@ -276,15 +276,11 @@ def main():
         if not img:
             send(a, dm, "--text", f"Пост ({kind}) за {today} НЕ выйдет: нет картинки или она совпадает с картинкой другого поста. Смотрите лог на сервере.")
             continue
-        when = slot_time(cfg, kind) if not a.publish_at else a.publish_at
-        if not a.no_preview:
-            label = {"news": "НОВОСТЬ", "tool": "ИНСТРУМЕНТ ДНЯ"}.get(kind, "ДОПОЛНИТЕЛЬНЫЙ ПОСТ")
+        # 21.11.2026, решение владельца: превью и список фактов в личку не шлём, пока включена автопубликация.
+        # Превью приходит, только если автопубликация выключена (тогда это единственный способ увидеть пост).
+        if not a.no_preview and not cfg.get("publish_channel"):
             if not send(a, dm, "--photo", str(img), "--text", item["post_html"], *button_args(item)):
                 continue
-            facts = "\n".join("• " + html.escape(x) for x in item.get("facts", []))
-            tail = (f"\n\nВыйдет в канал сегодня в {when} по Лиссабону автоматически." if cfg.get("publish_channel")
-                    else "\n\nАвтопубликация в канал выключена.")
-            send(a, dm, "--text", f"{label}: что за пост (только для вас):\n" + (facts or "нет данных") + tail)
         prepared.touch()
         if cfg.get("publish_channel"):
             cmd = [sys.executable, str(ROOT / "daily.py"), "--worker", "--kind", kind, "--token-file", a.token_file,
