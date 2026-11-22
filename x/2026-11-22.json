@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-22",
+ "news": {
+  "text": "Inkling 2 Mini от Thinking Machines: всего 26,4 млрд параметров, но на каждый токен работают 5,4 млрд. Запускается на Mac с 32 ГБ памяти, лицензия Apache 2.0. Список языков не указан, русский стоит проверить.\n\n#Inkling2Mini #ИИ",
+  "url": "https://listai.pro/katalog/",
+  "image": "images/2026-11-22.jpg",
+  "source": "draft.json (The Decoder, 21.11.2026)"
+ },
+ "tool": {
+  "text": "Дипфейк часто выдаёт рот: на звуках «п», «б» и «м» губы должны смыкаться полностью, а в подделке рот нередко остаётся приоткрытым. Смотрите ролик на скорости 0,25.\n\n#дипфейк #ИИ",
+  "url": "https://listai.pro/kak-raspoznat-deepfake-v-video-7-sekretov-faktchekerov",
+  "image": "images/x/2026-11-22-tool.jpg",
+  "source": "статья блога про дипфейки"
+ }
+}
