@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-24",
+ "news": {
+  "text": "Новая модель ChatGPT для обычных чатов лучше понимает изображения: 71,7% против 47,4% у GPT-6. Это внутренние тесты OpenAI, независимых проверок пока нет.\n\n#ChatGPT #нейросети",
+  "url": "https://listai.pro/proekt/chatgpt",
+  "image": "images/2026-11-24.jpg",
+  "source": "draft.json, The Decoder 23.11.2026"
+ },
+ "tool": {
+  "text": "С телефона нейросетями реально делать тексты, посты и короткие ролики. Карточки для маркетплейсов и чат-боты удобнее на компьютере. Приложения с выплатой за клики и рекламу дают копейки.\n\n#нейросети #ИИ",
+  "url": "https://listai.pro/zarabotok-s-telefona-bez-vlozhenij",
+  "image": "images/x/2026-11-24-tool.jpg",
+  "source": "https://listai.pro/zarabotok-s-telefona-bez-vlozhenij"
+ }
+}
