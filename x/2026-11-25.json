@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-25",
+ "news": {
+  "text": "Artifacts из чата Claude теперь можно установить как отдельные приложения для macOS и Windows. Пока бета, нужна свежая версия Claude.\n\nПо словам сотрудника Anthropic, хватит бесплатного аккаунта. Для своей сборки на Mac нужен Apple Developer.\n\n#Claude #нейросети",
+  "url": "https://listai.pro/proekt/claude",
+  "image": "images/2026-11-25.jpg",
+  "source": "draft.json (The Decoder, 24.11.2026)"
+ },
+ "tool": {
+  "text": "Чат-бот отвечает на вопрос, а ИИ-агент берёт задачу целиком: сам открывает файлы, собирает цифры и кладёт отчёт в папку.\n\nГлавный риск: лишний доступ к данным.\n\n#ИИагенты #нейросети",
+  "url": "https://listai.pro/ii-agenty-kak-oni-menyayut-mir-i-vashu-zhizn",
+  "image": "images/x/2026-11-25-tool.jpg",
+  "source": "блог: ИИ-агенты, что это и как выбрать"
+ }
+}
