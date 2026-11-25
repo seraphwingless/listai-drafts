@@ -1,7 +1,7 @@
 {
  "date": "2026-11-25",
  "news": {
-  "text": "Artifacts из чата Claude теперь можно установить как отдельные приложения для macOS и Windows. Пока бета, нужна свежая версия Claude.\n\nПо словам сотрудника Anthropic, хватит бесплатного аккаунта. Для своей сборки на Mac нужен Apple Developer.\n\n#Claude #нейросети",
+  "text": "Artifacts из чата Claude теперь можно установить как приложения для macOS и Windows. Пока бета.\n\nПо словам сотрудника Anthropic, хватит бесплатного аккаунта.\n\n#Claude #нейросети",
   "url": "https://listai.pro/proekt/claude",
   "image": "images/2026-11-25.jpg",
   "source": "draft.json (The Decoder, 24.11.2026)"
