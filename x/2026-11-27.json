@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-27",
+ "news": {
+  "text": "Claude Ship не мерджит сам: PR Steward чинит упавшие CI-проверки и конфликты, а Claude Approvals одобряет только рутину по правилам из файла репозитория. Anthropic советует начать с режима наблюдения.\n\n#Claude #ИИ",
+  "url": "https://listai.pro/proekt/claude/",
+  "image": "images/2026-11-27.jpg",
+  "source": "draft.json 2026-11-27"
+ },
+ "tool": {
+  "text": "Midjourney бесплатно больше не попробовать ни на сайте, ни в Discord, пробного периода нет. Зато сайт работает без Discord, вход через Google. Короткая проба осталась в приложении niji·journey.\n\n#Midjourney #нейросети",
+  "url": "https://listai.pro/midjourney-zapuskaet-besplatnuyu-veb-versiyu-s-dostupom-bez-discord",
+  "image": "images/x/2026-11-27-tool.jpg",
+  "source": "статья блога про Midjourney"
+ }
+}
