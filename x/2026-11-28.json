@@ -1,0 +1,15 @@
+{
+ "date": "2026-11-28",
+ "news": {
+  "text": "Лимиты Astra в GPT-6.2 теперь кончаются на 40% быстрее, Sol на 25%. Виновата ошибка биллинга при запуске: скидки посчитали неверно. Доплату задним числом не берут.\n\n#ChatGPT #ИИ",
+  "url": "https://listai.pro/proekt/chatgpt/",
+  "image": "images/2026-11-28.jpg",
+  "source": "draft.json 2026-11-28"
+ },
+ "tool": {
+  "text": "Бесплатные курсы по ИИ от Microsoft и LinkedIn: 10 штук, от основ генеративного ИИ до глубокого обучения. Один из них, AI for Beginners, это 24 урока. Нужен английский.\n\n#Microsoft #нейросети",
+  "url": "https://listai.pro/10-besplatnyh-onlajn-kursov-po-iskusstvennomu-intellektu",
+  "image": "images/x/2026-11-28-tool.jpg",
+  "source": "статья блога про бесплатные курсы по ИИ"
+ }
+}
